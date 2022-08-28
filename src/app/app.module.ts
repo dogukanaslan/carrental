@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { MatDatepickerModule} from '@angular/material/datepicker';
@@ -29,6 +29,9 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
 import { CarAddComponent } from './components/car-add/car-add.component';
 import { ToastrModule } from 'ngx-toastr';
 import { CarUpdateComponent } from './components/car-update/car-update.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegisterComponent } from './components/register/register.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 @NgModule({
@@ -51,6 +54,8 @@ import { CarUpdateComponent } from './components/car-update/car-update.component
     DatePickerComponent,
     CarAddComponent,
     CarUpdateComponent,
+    LoginComponent,
+    RegisterComponent,
     
 
   ],
@@ -69,7 +74,9 @@ import { CarUpdateComponent } from './components/car-update/car-update.component
       positionClass:"toast-bottom-right"
     }),
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
